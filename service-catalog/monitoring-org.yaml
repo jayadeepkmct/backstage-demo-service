@@ -1,0 +1,15 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: jd
+spec:
+  memberOf: [cloud-tools]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: cloud-tools
+spec:
+  type: team
+  children: []

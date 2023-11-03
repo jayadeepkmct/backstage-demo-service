@@ -1,0 +1,78 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: monitoring
+  description: Everything related to monitoring
+  title: Monitoring
+  links:
+    - url: http://example.com/domain/artists/
+      title: Monitoring Readme
+spec:
+  owner: cloud-tools
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: metrics
+  description: Everything related to metrics
+spec:
+  owner: cloud-tools
+  domain: monitoring
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: gcs
+  description: Google storage bucket
+spec:
+  type: database
+  owner: cloud-tools
+  system: metrics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: thanos-query
+  description: where you can query metrics
+  tags:
+    - prometheus
+    - thanos
+  links:
+    - url: https://thanos-query.staging.com
+      title: Thanos Query - staging
+      icon: user
+    - url: https://thanos-query.prod.com
+      title: Thanos Query - prod
+      icon: group
+  annotations:
+    team: cloud-tools
+spec:
+  type: service
+  lifecycle: production
+  owner: cloud-tools
+  system: metrics
+  dependsOn: ['resource:gcs']
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: alertmanager
+  description: where you can see alerts
+  tags:
+    - prometheus
+    - alertmanager
+  links:
+    - url: https://alertmanager.staging.com
+      title: Alertmanager - staging
+      icon: user
+    - url: 	https://alertmanager.prod.com
+      title: Alertmanager - prod
+      icon: group
+  annotations:
+    team: cloud-tools
+spec:
+  type: service
+  lifecycle: production
+  owner: cloud-tools
+  system: metrics
